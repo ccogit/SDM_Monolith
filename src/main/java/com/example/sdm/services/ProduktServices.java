@@ -6,7 +6,6 @@ import com.example.sdm.model.Produkt;
 import com.example.sdm.model.enums.ProduktTyp;
 import com.example.sdm.repositories.ProduktRepository;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class ProduktServices {
         int anzahlVorher = getBestand() != null ? getBestand().size() : 0;
         IntStream.range(0, anzahlEinheiten).forEach(i ->
                 save(creator.konfiguriere(creator.erzeugeProdukt())));
-        System.out.println(System.lineSeparator() + (getBestand().size()-anzahlVorher) + " Einheiten in Regale geräumt." );
+        System.out.println(System.lineSeparator() + (getBestand().size() - anzahlVorher) + " Einheiten in Regale geräumt.");
     }
 
     public Produkt save(Produkt produkt) {
@@ -39,8 +38,14 @@ public class ProduktServices {
         return produktRepository.findAll();
     }
 
-    public void deleteBestand() {
-        produktRepository.deleteAll();
+    public Map<ProduktTyp, List<Produkt>> getEinheitenJeProduktTyp() {
+        return getBestand().stream()
+                .collect(groupingBy(Produkt::getProduktTyp));
+    }
+
+    public Map<ProduktTyp, Long> getAnzahlEinheitenJeProduktTyp() {
+        return getBestand().stream()
+                .collect(groupingBy(Produkt::getProduktTyp, counting()));
     }
 
     public Map<ProduktTyp, Map<Boolean, List<Produkt>>> getAktuellenBestandGroupedByTypDetails() {
@@ -65,11 +70,6 @@ public class ProduktServices {
                                 OptionalDouble.of(Math.round(100 * list.stream().mapToDouble(Produkt::getQualitaetAktuell).average().orElse(-1)) / 100.00),
                                 Math.round(100 * list.stream().mapToDouble(Produkt::getPreisAktuell).sum()) / 100.00
                         ))));
-    }
-
-    public Map<ProduktTyp, Long> getAnzahlEinheitenJeProduktTyp() {
-        return getBestand().stream()
-                .collect(groupingBy(Produkt::getProduktTyp, counting()));
     }
 
 }

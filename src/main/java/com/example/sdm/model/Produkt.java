@@ -1,7 +1,6 @@
 package com.example.sdm.model;
 
 import com.example.sdm.Starter;
-import com.example.sdm.SzenarioConfig;
 import com.example.sdm.model.enums.ProduktTyp;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
@@ -15,6 +14,8 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+
+import static com.example.sdm.Starter.*;
 
 @Data
 @Entity
@@ -38,7 +39,7 @@ public abstract class Produkt implements Serializable {
     @CsvDate(value = "yyyy-MM-dd")
     @CsvBindByName(column = "LIEFER_DATUM")
     @Builder.Default
-    private LocalDate lieferDatum = SzenarioConfig.lieferDatum;
+    private LocalDate lieferDatum = Starter.lieferDatum;
 
     @CsvDate(value = "yyyy-MM-dd")
     @CsvBindByName(column = "VERFALL_DATUM")
@@ -66,7 +67,7 @@ public abstract class Produkt implements Serializable {
     /* Käse hat ein Verfallsdatum */
     /* Wein verfällt nicht (VerfallDatum für alle Weine 31.12.9999 (s. WeinCreator)) */
     public Integer getTageBisVerfall() {
-        return Math.toIntExact(ChronoUnit.DAYS.between(getLieferDatum().plusDays(Starter.tageVergangenSeitLieferung), getVerfallDatum()));
+        return Math.toIntExact(ChronoUnit.DAYS.between(getLieferDatum().plusDays(tageVergangenSeitLieferung), getVerfallDatum()));
     }
 
     public Boolean verfallDatumErreicht() {

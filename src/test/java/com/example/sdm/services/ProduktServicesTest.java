@@ -12,8 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.sdm.SzenarioConfig.anzahlEinheitenKaese;
-import static com.example.sdm.SzenarioConfig.anzahlEinheitenWein;
+import static com.example.sdm.Starter.anzahlEinheitenKaese;
+import static com.example.sdm.Starter.anzahlEinheitenWein;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

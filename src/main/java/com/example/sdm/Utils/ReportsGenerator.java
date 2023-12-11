@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Stream;
 
 import static com.example.sdm.Starter.*;
-import static com.example.sdm.SzenarioConfig.*;
 
 @RequiredArgsConstructor
 @Service
@@ -19,17 +18,13 @@ public class ReportsGenerator {
     public void printBericht() {
         printReportHeader();
         printSequenceOfDays();
-        tageVergangenSeitLieferung = 0;
     }
 
     public int printSequenceOfDays() {
         printReportDayHeader();
         switch (selectedReportTyp) {
             case "Langbericht" -> printLongReportSingleDay();
-            case "Kurzbericht" -> {
-                printShortReportHeader();
-                printShortReportSingleDay();
-            }
+            case "Kurzbericht" -> printShortReportSingleDay();
             case "VerfallenListe" -> printRemoveListSingleDay();
         }
         printDaySeparatorLine();
@@ -61,6 +56,7 @@ public class ReportsGenerator {
     }
 
     public void printShortReportSingleDay() {
+        printShortReportHeader();
         produktServices.getStatistic().forEach((k, v) -> System.out.printf("%-10s %-200s %n", k, v));
     }
 
