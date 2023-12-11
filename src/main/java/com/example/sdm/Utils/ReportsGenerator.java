@@ -28,6 +28,7 @@ public class ReportsGenerator {
             case "VerfallenListe" -> printRemoveListSingleDay();
         }
         printDaySeparatorLine();
+        produktServices.removeProdukteZuEntfernen();
         tageVergangenSeitLieferung++;
         return tageVergangenSeitLieferung <= anzahlTageSimulation ? printSequenceOfDays() : -1;
     }

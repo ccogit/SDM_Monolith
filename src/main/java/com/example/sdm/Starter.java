@@ -2,6 +2,7 @@ package com.example.sdm;
 
 
 import com.example.sdm.Utils.ReportsGenerator;
+import com.example.sdm.creators.BrotCreator;
 import com.example.sdm.creators.KaeseCreator;
 import com.example.sdm.creators.WeinCreator;
 import com.example.sdm.model.ProduktTransfer;
@@ -27,6 +28,7 @@ public class Starter implements CommandLineRunner {
 
     private final WeinCreator weinCreator;
     private final KaeseCreator kaeseCreator;
+    private final BrotCreator brotCreator;
     private final ProduktServices produktServices;
     private final ReportsGenerator reportsGenerator;
 
@@ -40,6 +42,9 @@ public class Starter implements CommandLineRunner {
     // Gelieferte und in Regale geräumte Einheiten Käse
     public static final int anzahlEinheitenKaese = 10;
 
+    // Gelieferte und in Regale geräumte Einheiten Brot
+    public static final int anzahlEinheitenBrot = 5;
+
     // Datum der Lieferung
     public static LocalDate lieferDatum = LocalDate.of(2023, 12, 5);
 
@@ -47,7 +52,7 @@ public class Starter implements CommandLineRunner {
     public static final int anzahlTageSimulation = 150;
 
     // Einlesen von CSV-Daten bei Beginn des App-Starts
-    public static boolean leseCsvDaten = true;
+    public static boolean leseCsvDaten = false;
 
     // Typ des anzuzeigenden Berichts. Mögliche Werte: "Langbericht", "Kurzbericht", "VerfallenListe"
     public static String selectedReportTyp = "Langbericht";
@@ -63,6 +68,9 @@ public class Starter implements CommandLineRunner {
 
         //  Regale mit Kaese befuellen
         produktServices.befuelleRegale(kaeseCreator, anzahlEinheitenKaese);
+
+        //  Regale mit Brot befuellen
+        produktServices.befuelleRegale(brotCreator, anzahlEinheitenBrot);
 
         // Csv-Daten einlesen
         if (leseCsvDaten) readCSV();

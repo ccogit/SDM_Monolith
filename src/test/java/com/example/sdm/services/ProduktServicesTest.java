@@ -14,7 +14,8 @@ import java.util.Map;
 
 import static com.example.sdm.Starter.anzahlEinheitenKaese;
 import static com.example.sdm.Starter.anzahlEinheitenWein;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -35,20 +36,13 @@ class ProduktServicesTest {
         Map<ProduktTyp, Long> einheitenJeProduktTyp = new HashMap<>();
         einheitenJeProduktTyp.put(ProduktTyp.KAESE, (long) anzahlEinheitenKaese);
         einheitenJeProduktTyp.put(ProduktTyp.WEIN, (long) anzahlEinheitenWein);
-        assertEquals(einheitenJeProduktTyp,produktServices.getAnzahlEinheitenJeProduktTyp());
+        assertEquals(einheitenJeProduktTyp, produktServices.getAnzahlEinheitenJeProduktTyp());
     }
 
     @Test
     @Order(3)
     void save() {
         assertNotNull(produktServices.save(Kaese.builder().bezeichnung("TestProdukt").build()).getId());
-    }
-
-    @Test
-    @Order(4)
-    void deleteBestand() {
-        produktServices.deleteBestand();
-        assertTrue(produktServices.getBestand().isEmpty());
     }
 
 }

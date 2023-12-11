@@ -72,4 +72,8 @@ public class ProduktServices {
                         ))));
     }
 
+    public void removeProdukteZuEntfernen() {
+        produktRepository.deleteAll(getBestand().stream().filter(Produkt::vonAuslageEntfernen).toList());
+    }
+
 }

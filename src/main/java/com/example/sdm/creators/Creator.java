@@ -9,4 +9,5 @@ public abstract class Creator {
     public abstract Produkt erzeugeProdukt();
 
     public abstract Produkt konfiguriere(Produkt produkt);
+
 }
