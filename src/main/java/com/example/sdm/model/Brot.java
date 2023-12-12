@@ -4,16 +4,17 @@ import com.example.sdm.Starter;
 import com.example.sdm.model.enums.BrotTyp;
 import com.example.sdm.model.enums.ProduktTyp;
 import jakarta.persistence.Entity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-@EqualsAndHashCode(callSuper = true)
+
+@Getter
+@Setter
 @Entity
-@Data
 @SuperBuilder(toBuilder = true)
 @Component
 public class Brot extends Produkt {

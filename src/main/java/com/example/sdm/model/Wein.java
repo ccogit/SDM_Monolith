@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 import static com.example.sdm.Starter.tageVergangenSeitLieferung;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,7 +16,7 @@ import static com.example.sdm.Starter.tageVergangenSeitLieferung;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Component
-public class Wein extends Produkt implements Serializable {
+public class Wein extends Produkt {
 
     @Override
     public ProduktTyp getProduktTyp() {

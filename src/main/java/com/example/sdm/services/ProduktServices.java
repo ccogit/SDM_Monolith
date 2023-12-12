@@ -21,8 +21,12 @@ import static java.util.stream.Collectors.*;
 @NoArgsConstructor
 public class ProduktServices {
 
-    @Autowired
     ProduktRepository produktRepository;
+
+    @Autowired
+    public ProduktServices(ProduktRepository produktRepository) {
+        this.produktRepository = produktRepository;
+    }
 
     public void befuelleRegale(Creator creator, Integer anzahlEinheiten) {
         int anzahlVorher = getBestand() != null ? getBestand().size() : 0;
@@ -61,7 +65,7 @@ public class ProduktServices {
                 .collect(groupingBy(Produkt::getProduktTyp, collectingAndThen(toList(), list ->
                         new DailyStatistic(
                                 list.stream().map(Produkt::id).count(),
-                                list.stream().filter(Produkt::vonAuslageEntfernen).toList().size(),
+                                list.stream().filter(Produkt::vonAuslageEntfernen).count(),
                                 OptionalDouble.of(Math.round(100 * list.stream().mapToInt(Produkt::getTageBisVerfall).average().orElse(-1)) / 100.00),
                                 OptionalDouble.of(Math.round(100 * list.stream().mapToDouble(Produkt::getQualitaetAktuell).average().orElse(-1)) / 100.00),
                                 Math.round(100 * list.stream().mapToDouble(Produkt::getPreisAktuell).sum()) / 100.00

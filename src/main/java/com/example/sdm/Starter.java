@@ -13,6 +13,7 @@ import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.Data;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@Profile("!test")
 @Data
 public class Starter implements CommandLineRunner {
 
@@ -49,7 +51,7 @@ public class Starter implements CommandLineRunner {
     public static final int anzahlTageSimulation = 150;
 
     // Einlesen von CSV-Daten bei Beginn des App-Starts
-    public static boolean leseCsvDaten = true;
+    public static boolean leseCsvDaten = false;
 
     // Typ des anzuzeigenden Berichts. Mögliche Werte: "Langbericht", "Kurzbericht", "VerfallenListe"
     public static String selectedReportTyp = "Langbericht";

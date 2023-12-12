@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -25,7 +24,7 @@ import static com.example.sdm.Starter.tageVergangenSeitLieferung;
 @NoArgsConstructor
 @SuperBuilder(toBuilder = true)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Produkt implements Serializable {
+public abstract class Produkt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
