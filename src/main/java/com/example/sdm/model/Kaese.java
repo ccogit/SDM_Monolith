@@ -1,7 +1,6 @@
 package com.example.sdm.model;
 
 import com.example.sdm.model.enums.ProduktTyp;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,13 +27,13 @@ public class Kaese extends Produkt {
     /* Käse hat einen tagesaktuellen Preis. */
     /* Der Tagespreis wird durch Qualität bestimmt: Grundpreis + 0,10€ * Qualität */
     public Double getPreisAktuell() {
-        return vonAuslageEntfernen() ? 0.0 : Math.round(100 * (getGrundpreis() + 0.1 * getQualitaetAktuell())) / 100.00;
+        return vonAuslageEntfernen() ? 0.0 : Math.round(100 * (grundpreis() + 0.1 * getQualitaetAktuell())) / 100.00;
     }
 
     @Override
     /* Käse verliert täglich einen Qualitätspunkt */
     public int getQualitaetAktuell() {
-        return getStartQualitaet() - tageVergangenSeitLieferung;
+        return startQualitaet() - tageVergangenSeitLieferung;
     }
 
     @Override

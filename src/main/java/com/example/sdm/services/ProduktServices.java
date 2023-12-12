@@ -60,7 +60,7 @@ public class ProduktServices {
         return getBestand().stream()
                 .collect(groupingBy(Produkt::getProduktTyp, collectingAndThen(toList(), list ->
                         new DailyStatistic(
-                                list.stream().map(Produkt::getId).count(),
+                                list.stream().map(Produkt::id).count(),
                                 list.stream().filter(Produkt::vonAuslageEntfernen).toList().size(),
                                 OptionalDouble.of(Math.round(100 * list.stream().mapToInt(Produkt::getTageBisVerfall).average().orElse(-1)) / 100.00),
                                 OptionalDouble.of(Math.round(100 * list.stream().mapToDouble(Produkt::getQualitaetAktuell).average().orElse(-1)) / 100.00),
@@ -73,10 +73,10 @@ public class ProduktServices {
     }
 
     public Produkt kopiereWerte(Produkt produkt, ProduktTransfer produktTransfer) {
-        produkt.setBezeichnung(produktTransfer.getBezeichnung());
-        produkt.setStartQualitaet(produktTransfer.getStartQualitaet());
-        produkt.setGrundpreis(produktTransfer.getGrundpreis());
-        produkt.setVerfallDatum(produktTransfer.getVerfallDatum());
+        produkt.bezeichnung(produktTransfer.getBezeichnung());
+        produkt.startQualitaet(produktTransfer.getStartQualitaet());
+        produkt.grundpreis(produktTransfer.getGrundpreis());
+        produkt.verfallDatum(produktTransfer.getVerfallDatum());
         return produkt;
     }
 

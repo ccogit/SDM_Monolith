@@ -25,9 +25,9 @@ public class BrotCreator extends Creator {
 
     @Override
     public Produkt konfiguriere(Produkt produkt) {
-        produkt.setBezeichnung(faker.name().lastName());
-        produkt.setStartQualitaet(random.nextInt(0, 30));
-        produkt.setGrundpreis(Math.round(100 * random.nextDouble(3, 9)) / 100.00);
+        produkt.bezeichnung(faker.name().lastName())
+                .startQualitaet(random.nextInt(0, 30))
+                .grundpreis(Math.round(100 * random.nextDouble(3, 9)) / 100.00);
         return produkt;
     }
 

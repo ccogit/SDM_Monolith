@@ -20,7 +20,7 @@ public class Brot extends Produkt {
 
     public Brot() {
         this.brotTyp = BrotTyp.randomBrotTyp();
-        this.setVerfallDatum(Starter.lieferDatum.plusDays(brotTyp.tageBisVerfall));
+        this.verfallDatum(Starter.lieferDatum.plusDays(brotTyp.tageBisVerfall));
     }
 
     private BrotTyp brotTyp;
@@ -31,7 +31,7 @@ public class Brot extends Produkt {
     }
 
     public LocalDate getVerfallDatum() {
-        return getLieferDatum().plusDays(getBrotTyp().tageBisVerfall);
+        return lieferDatum().plusDays(getBrotTyp().tageBisVerfall);
     }
 
     @Override
@@ -41,14 +41,14 @@ public class Brot extends Produkt {
           Der reguläre Preis gilt bis zum letzten Tag vor Erreichen des Verfalldatums.
         - Der zweite Preis gilt nur am letzten Tag vor Erreichen des Verfalldatums. Er entspricht der Hälfte des regulären Preises */
     public Double getPreisAktuell() {
-        double regulaererPreis = Math.round(100 * (getGrundpreis() + 0.1 * getStartQualitaet())) / 100.00;
+        double regulaererPreis = Math.round(100 * (grundpreis() + 0.1 * startQualitaet())) / 100.00;
         return getTageBisVerfall() > 1 ? regulaererPreis : regulaererPreis / 2;
     }
 
     @Override
     /* Brot ändert seine Qualität nicht. */
     public int getQualitaetAktuell() {
-        return getStartQualitaet();
+        return startQualitaet();
     }
 
     @Override
