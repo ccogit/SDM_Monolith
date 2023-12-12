@@ -35,10 +35,10 @@ public class ReportsGenerator {
 
     /* SINGLE REPORT LINES */
     public void printLongReportSingleDay() {
-        produktServices.getAktuellenBestandGroupedByTypDetails().forEach((k, v) -> {
-            System.out.println(NEW_LINE + "---" + k + "---");
-            v.forEach((b, l) -> {
-                String headline = b ? "Verfallene Produkte" : "Nicht verfallene Produkte";
+        produktServices.getAktuellenBestandGroupedByTypDetails().forEach((produktTyp, listMap) -> {
+            System.out.println(NEW_LINE + "---" + produktTyp + "---");
+            listMap.forEach((vonAuslageEntfernen, produktListe) -> {
+                String headline = vonAuslageEntfernen ? "Von Auslage zu entfernende Produkte" : "Gute Produkte";
                 System.out.println(NEW_LINE + "-" + headline + "-" + NEW_LINE);
                 System.out.printf("%-5s %-17s %-17s %-17s %-17s %-17s %-17s %-17s %-17s %-17s %n",
                         "ID",
@@ -51,7 +51,7 @@ public class ReportsGenerator {
                         "AKT. PREIS",
                         "AUSLIEGEND",
                         "ZU ENTFERNEN");
-                l.forEach(System.out::println);
+                produktListe.forEach(System.out::println);
             });
         });
     }
@@ -75,7 +75,7 @@ public class ReportsGenerator {
     }
 
     public static void printReportDayHeader() {
-        System.out.println(NEW_LINE + "Datum: " + getAktuellesDatum() + " (" + tageVergangenSeitLieferung + ")");
+        System.out.println(NEW_LINE + "Datum: " + getAktuellesDatum() + " (" + tageVergangenSeitLieferung + " Tage seit Lieferung)");
     }
 
     public static void printShortReportHeader() {

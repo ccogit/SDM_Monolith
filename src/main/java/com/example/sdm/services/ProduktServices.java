@@ -3,6 +3,7 @@ package com.example.sdm.services;
 import com.example.sdm.creators.Creator;
 import com.example.sdm.model.DailyStatistic;
 import com.example.sdm.model.Produkt;
+import com.example.sdm.model.ProduktTransfer;
 import com.example.sdm.model.enums.ProduktTyp;
 import com.example.sdm.repositories.ProduktRepository;
 import lombok.NoArgsConstructor;
@@ -38,11 +39,6 @@ public class ProduktServices {
         return produktRepository.findAll();
     }
 
-    public Map<ProduktTyp, List<Produkt>> getEinheitenJeProduktTyp() {
-        return getBestand().stream()
-                .collect(groupingBy(Produkt::getProduktTyp));
-    }
-
     public Map<ProduktTyp, Long> getAnzahlEinheitenJeProduktTyp() {
         return getBestand().stream()
                 .collect(groupingBy(Produkt::getProduktTyp, counting()));
@@ -74,6 +70,14 @@ public class ProduktServices {
 
     public void removeProdukteZuEntfernen() {
         produktRepository.deleteAll(getBestand().stream().filter(Produkt::vonAuslageEntfernen).toList());
+    }
+
+    public Produkt kopiereWerte(Produkt produkt, ProduktTransfer produktTransfer) {
+        produkt.setBezeichnung(produktTransfer.getBezeichnung());
+        produkt.setStartQualitaet(produktTransfer.getStartQualitaet());
+        produkt.setGrundpreis(produktTransfer.getGrundpreis());
+        produkt.setVerfallDatum(produktTransfer.getVerfallDatum());
+        return produkt;
     }
 
 }

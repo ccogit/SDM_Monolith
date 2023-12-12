@@ -2,9 +2,8 @@ package com.example.sdm.creators;
 
 import com.example.sdm.model.Produkt;
 import com.example.sdm.model.Wein;
-import com.github.javafaker.Faker;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +15,13 @@ import java.util.Random;
 @NoArgsConstructor
 public class WeinCreator extends Creator {
 
-    @Autowired Faker faker;
-    @Autowired Random random;
+    @Autowired
+    Faker faker;
+    @Autowired
+    Random random;
+
     @Override
-    public Produkt erzeugeProdukt() {
+    public Wein erzeugeProdukt() {
         return new Wein();
     }
 

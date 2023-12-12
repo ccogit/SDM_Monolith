@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import static com.example.sdm.Starter.*;
+import static com.example.sdm.Starter.tageVergangenSeitLieferung;
 
 @Data
 @Entity

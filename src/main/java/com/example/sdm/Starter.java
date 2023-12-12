@@ -3,6 +3,7 @@ package com.example.sdm;
 
 import com.example.sdm.Utils.ReportsGenerator;
 import com.example.sdm.creators.BrotCreator;
+import com.example.sdm.creators.Creator;
 import com.example.sdm.creators.KaeseCreator;
 import com.example.sdm.creators.WeinCreator;
 import com.example.sdm.model.ProduktTransfer;
@@ -36,13 +37,9 @@ public class Starter implements CommandLineRunner {
 
     /* Konfiguration Szenario-Parameter */
 
-    // Gelieferte und in Regale geräumte Einheiten Wein
+    // Zu liefernde Einheiten der ProduktTypen:
     public static final int anzahlEinheitenWein = 15;
-
-    // Gelieferte und in Regale geräumte Einheiten Käse
     public static final int anzahlEinheitenKaese = 10;
-
-    // Gelieferte und in Regale geräumte Einheiten Brot
     public static final int anzahlEinheitenBrot = 5;
 
     // Datum der Lieferung
@@ -52,7 +49,7 @@ public class Starter implements CommandLineRunner {
     public static final int anzahlTageSimulation = 150;
 
     // Einlesen von CSV-Daten bei Beginn des App-Starts
-    public static boolean leseCsvDaten = false;
+    public static boolean leseCsvDaten = true;
 
     // Typ des anzuzeigenden Berichts. Mögliche Werte: "Langbericht", "Kurzbericht", "VerfallenListe"
     public static String selectedReportTyp = "Langbericht";
@@ -63,20 +60,25 @@ public class Starter implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // Regale mit Wein befuellen
-        produktServices.befuelleRegale(weinCreator, anzahlEinheitenWein);
-
-        //  Regale mit Kaese befuellen
-        produktServices.befuelleRegale(kaeseCreator, anzahlEinheitenKaese);
-
-        //  Regale mit Brot befuellen
-        produktServices.befuelleRegale(brotCreator, anzahlEinheitenBrot);
+        // Regale mit Wein, Kaese und Brot befuellen
+        produktServices.befuelleRegale(getCreatorForProduktTyp("Wein"), anzahlEinheitenWein);
+        produktServices.befuelleRegale(getCreatorForProduktTyp("Kaese"), anzahlEinheitenKaese);
+        produktServices.befuelleRegale(getCreatorForProduktTyp("Brot"), anzahlEinheitenBrot);
 
         // Csv-Daten einlesen
         if (leseCsvDaten) readCSV();
 
         // Bericht ausgeben
         reportsGenerator.printBericht();
+    }
+
+    public Creator getCreatorForProduktTyp(String produktTyp) {
+        return switch (produktTyp.toLowerCase()) {
+            case "wein" -> weinCreator;
+            case "kaese" -> kaeseCreator;
+            case "brot" -> brotCreator;
+            default -> throw new IllegalStateException("Unexpected value: " + produktTyp);
+        };
     }
 
     public void readCSV() throws IOException, URISyntaxException {
@@ -94,10 +96,8 @@ public class Starter implements CommandLineRunner {
 
         /* Erstellung der eigentlichen Produkte auf Basis der Eigenschaft 'ProduktTyp' der Klasse ProduktTransfer */
         csvToBean.forEach(produktTransfer -> {
-            switch (produktTransfer.getProduktTyp()) {
-                case "WEIN" -> produktServices.save(weinCreator.konfiguriere(weinCreator.erzeugeProdukt()));
-                case "KAESE" -> produktServices.save(kaeseCreator.konfiguriere(kaeseCreator.erzeugeProdukt()));
-            }
+            Creator creator = getCreatorForProduktTyp(produktTransfer.getProduktTyp());
+            produktServices.save(produktServices.kopiereWerte(creator.erzeugeProdukt(), produktTransfer));
         });
 
         /* Ausgabe der eingelesenen Produkte per ProduktTyp */

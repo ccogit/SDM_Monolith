@@ -1,7 +1,6 @@
 package com.example.sdm.model;
 
 import com.example.sdm.model.enums.ProduktTyp;
-import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,7 +33,7 @@ public class Wein extends Produkt implements Serializable {
     }
 
     @Override
-    /* Wein verliert nicht an Qualität, sondern gewinnt ab dem  Stichtag alle 10 Tage +1 Qualität hinzu, bis die Qualität 50 erreicht ist. */
+    /* Wein verliert nicht an Qualität, sondern gewinnt ab dem Stichtag alle 10 Tage +1 Qualität hinzu, bis die Qualität 50 erreicht ist. */
     public int getQualitaetAktuell() {
         return Math.min(getStartQualitaet() + tageVergangenSeitLieferung / 10, 50);
     }

@@ -2,8 +2,8 @@ package com.example.sdm.creators;
 
 import com.example.sdm.model.Brot;
 import com.example.sdm.model.Produkt;
-import com.github.javafaker.Faker;
 import lombok.NoArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

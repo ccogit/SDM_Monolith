@@ -11,8 +11,6 @@ import java.time.LocalDate;
 @Data
 @ToString
 public class ProduktTransfer {
-    @CsvBindByName(column = "ID")
-    Long id;
 
     @CsvBindByName(column = "BEZEICHNUNG")
     String bezeichnung;
